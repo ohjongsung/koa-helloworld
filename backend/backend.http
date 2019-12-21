@@ -1,0 +1,26 @@
+GET http://localhost:4000/api/posts
+###
+POST http://localhost:4000/api/posts
+Content-Type: application/json
+
+{
+"title":"node.js koa 프로젝트",
+"body":"koa 로 백엔드 api 를 만들어보자"
+}
+###
+PATCH http://localhost:4000/api/posts/1
+Content-Type: application/json
+
+{
+  "title":"node.js koa 프로젝트"
+}
+###
+PUT http://localhost:4000/api/posts/1
+Content-Type: application/json
+
+{
+  "title":"node.js koa 프로젝트"
+}
+###
+DELETE http://localhost:4000/api/posts/1
+###
