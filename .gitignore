@@ -69,7 +69,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+backend/.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -114,3 +114,4 @@ dist
 /.idea/modules.xml
 /.idea/vcs.xml
 /backend/yarn.lock
+/backend/.env
