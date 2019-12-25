@@ -8,7 +8,7 @@ const {
 
 mongoose.Promise = global.Promise; // Node 의 Promise 를 사용하도록 설정
 mongoose.connect(mongoURI, {
-    useNewUrlParser: true, useUnifiedTopology: true
+    useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
 }).then(() => {
     console.log('connected to mongodb');
 }).catch((e) => {

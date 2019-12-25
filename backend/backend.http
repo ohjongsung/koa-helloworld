@@ -1,18 +1,29 @@
-GET http://localhost:4000/api/posts
+GET http://localhost:4000/api/posts/
+###
+GET http://localhost:4000/api/posts/5e02d2d61f7ec517acae17e3
 ###
 POST http://localhost:4000/api/posts
 Content-Type: application/json
 
 {
-"title":"node.js koa 프로젝트",
-"body":"koa 로 백엔드 api 를 만들어보자"
+  "title": "test for pagination",
+  "body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "tags": [
+    "koa",
+    "nodejs"
+  ]
 }
 ###
-PATCH http://localhost:4000/api/posts/1
+PATCH http://localhost:4000/api/posts/5e02d6335c037a2068eb68a7
 Content-Type: application/json
 
 {
-  "title":"node.js koa 프로젝트"
+  "title": "node.js koa 프로젝트@@",
+  "body": "koa 로 백엔드 api 를 만들어보자",
+  "tags": [
+    "koa",
+    "nodejs"
+  ]
 }
 ###
 PUT http://localhost:4000/api/posts/1
@@ -22,5 +33,5 @@ Content-Type: application/json
   "title":"node.js koa 프로젝트"
 }
 ###
-DELETE http://localhost:4000/api/posts/1
+DELETE http://localhost:4000/api/posts/5e02d8cd4218692dd80f9da5
 ###
