@@ -1,5 +1,7 @@
 GET http://localhost:4000/api/posts/
 ###
+GET http://localhost:4000/api/posts?page=1
+###
 GET http://localhost:4000/api/posts/5e02d2d61f7ec517acae17e3
 ###
 POST http://localhost:4000/api/posts

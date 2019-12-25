@@ -1,9 +1,9 @@
 const Post = require('models/post');
 const Joi = require('joi');
-const { ObjectId } = require('mongoose').Types;
+const {ObjectId} = require('mongoose').Types;
 
 exports.checkObjectId = (ctx, next) => {
-    const { id } = ctx.params;
+    const {id} = ctx.params;
 
     if (!ObjectId.isValid(id)) {
         ctx.status = 404;
@@ -34,7 +34,7 @@ exports.write = async (ctx) => {
         return;
     }
 
-    const { title, body, tags } = ctx.request.body;
+    const {title, body, tags} = ctx.request.body;
 
     const post = new Post({
         title, body, tags
@@ -54,11 +54,28 @@ exports.write = async (ctx) => {
  */
 exports.list = async (ctx) => {
     try {
+        // page 가 없으면 1로 간주
+        // query 는 문자열 형태로 받아 오므로 숫자로 변환
+        const page = parseInt((ctx.query.page || 1));
+        console.log(page);
+        if (page < 1) {
+            ctx.status = 400;
+            return;
+        }
+
         const posts = await Post.find()
             .sort({_id: -1})
             .limit(10)
+            .skip((page - 1) * 10)
+            .lean() // exec 전에 lean() 삽입
             .exec();
-        ctx.body = posts;
+        // 길이 체크 후, 자르는 함수
+        const limitBodyLength = post => ({
+            ...post,
+            body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
+        });
+        // 배열의 map 함수로 limitBodyLength 적용
+        ctx.body = posts.map(limitBodyLength);
     } catch (e) {
         ctx.throw(e, 500);
     }
@@ -69,7 +86,7 @@ exports.list = async (ctx) => {
  * GET /api/posts/:id
  */
 exports.read = async (ctx) => {
-    const { id } = ctx.params;
+    const {id} = ctx.params;
     try {
         const post = await Post.findById(id).exec();
         if (!post) {
@@ -87,7 +104,7 @@ exports.read = async (ctx) => {
  * DELETE /api/posts/:id
  */
 exports.remove = async (ctx) => {
-    const { id } = ctx.params;
+    const {id} = ctx.params;
     try {
         await Post.findByIdAndDelete(id).exec();
         ctx.status = 204;
@@ -102,12 +119,12 @@ exports.remove = async (ctx) => {
  * { title, body }
  */
 exports.update = async (ctx) => {
-    const { id } = ctx.params;
+    const {id} = ctx.params;
     try {
         const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
             // 이 값을 설정해야 업데이트된 객체를 반환한다.
             // 설정하지 않으면 업데이트되기 전의 객체를 반환한다.
-            new : true
+            new: true
         }).exec();
         if (!post) {
             ctx.status = 404;
